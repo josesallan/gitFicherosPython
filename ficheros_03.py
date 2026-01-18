@@ -1,3 +1,5 @@
+# Importamos desde el módulo ficheros_01 a función directorio
+# Esta función devuelve una cadena de texto con el directorio del archivo ejecutado
 from ficheros_01 import directorio
 
 # Solicitamos los datos del archivo

@@ -5,6 +5,23 @@ import shelve
 # Esta función devuelve una cadena de texto con el directorio del archivo ejecutado
 from ficheros_01 import directorio
 
+# Gestionamos la lista de mejores puntuaciones
+# Se guardarán en un fichero con nombre mejores_puntuaciones_tragaperras
+
+# Montamos el path completo del archivo a gestionar
+# Creamos el path completo del archivo
+path_best_scores = directorio() + '/mejores_puntuaciones_tragaperras'
+best_scores = shelve.open(path_best_scores)
+
+
+# Creamos una función que muestre las mejores marcas.
+def mejores_marcas():
+    print("\n   1º", best_scores['1']['nombre'], (12 - len(best_scores['1']['nombre'])) * " ", end='')
+    print((8 - len(str(best_scores['1']['score']))) * " ", str('{0:.2f}'.format(best_scores['1']['score'])) + '€')
+    print("   2º", best_scores['2']['nombre'], (12 - len(best_scores['2']['nombre'])) * " ", end='')
+    print((8 - len(str(best_scores['2']['score']))) * " ", str('{0:.2f}'.format(best_scores['2']['score'])) + '€')
+    print("   3º", best_scores['3']['nombre'], (12 - len(best_scores['3']['nombre'])) * " ", end='')
+    print((8 - len(str(best_scores['3']['score']))) * " ", str('{0:.2f}'.format(best_scores['3']['score'])) + '€')
 
 
 # Importamos del módulo random de la librería estándar
@@ -20,9 +37,15 @@ terminar = 's'
 dinero = 0
 # En otra variable acumularemos el premio
 premio = 0
-nombre = input('¿Cómo te llamas?')
+
+print("\n Bienvenido al juego del tragaperras")
+print(" ===================================\n")
+print(" - En este momento las mejores marcas son:")
+mejores_marcas()
+print()
+nombre = input(' ¿Cómo te llamas? ')
 while dinero <= 0:
-    dinero = float(input('¿Que cantidad quieres apostar (€)? '))
+    dinero = float(input('\n ¿Que cantidad quieres apostar (€)? '))
 
 # Bucle principal
 # El bucle termina cuando contesto n
@@ -79,14 +102,6 @@ if premio > 0:
 else:
     print('Programa terminado.')
 
-# Gestionamos la lista de mejores puntuaciones
-# Se guardarán en un fichero con nombre mejores_puntuaciones_tragaperras
-
-# Montamos el path completo del archivo a gestionar
-# Creamos el path completo del archivo
-path_best_scores = directorio() + '/mejores_puntuaciones_tragaperras'
-best_scores = shelve.open(path_best_scores)
-
 # Calculo la ganancia como la diferencia entre el premio conseguido y el dinero inicial.
 ganancia = (premio - dinero)
 if ganancia > best_scores['1']['score']:
@@ -101,7 +116,5 @@ elif ganancia > best_scores['3']['score']:
 else:
     print("Tu puntuación no está entre las tres más altas")
 
-print("1º", best_scores['1']['nombre'], best_scores['1']['score'])
-print("2º", best_scores['2']['nombre'], best_scores['2']['score'])
-print("3º", best_scores['3']['nombre'], best_scores['3']['score'])
+mejores_marcas()
 
